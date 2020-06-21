@@ -8,4 +8,6 @@ public interface BaseTest
 	InputMethods inputObj = new InputMethods();
 	ProgressMethods progressObj = new ProgressMethods();
 	SendMailMethods sendMailobj = new SendMailMethods();
+	NavigateMethods navigationObj = new NavigateMethods();
+	ScreenShotMethods screenshotObj = new ScreenShotMethods();
 }

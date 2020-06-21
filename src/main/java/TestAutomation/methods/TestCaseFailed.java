@@ -1,6 +1,10 @@
 package TestAutomation.methods;
 
-public class TestCaseFailed extends Exception 
+import java.io.IOException;
+
+import static TestAutomation.methods.BaseTest.screenshotObj;
+
+public class TestCaseFailed extends Exception
 {
 	/**
 	 * Added serializable varibale to remove warning
@@ -12,9 +16,9 @@ public class TestCaseFailed extends Exception
 		super();
 	}
 	 
-	public TestCaseFailed(String message) 
-	{
-	    super(message);
+	public TestCaseFailed(String message) throws IOException {
+		super(message);
+		screenshotObj.takeScreenShot();
 	    this.message = message;
 	}
 	 

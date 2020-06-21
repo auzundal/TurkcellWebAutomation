@@ -3,7 +3,7 @@ package Environment;
 import org.openqa.selenium.NoSuchSessionException;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.concurrent.TimeUnit;
@@ -19,14 +19,15 @@ public class DriverUtil {
             return driver;
         }
 
-        System.setProperty("webdriver.chrome.driver", "webdrivers\\chromedriver.exe");
-        //  System.setProperty("webdriver.gecko.driver", "webdrivers\\geckodriver.exe");
+        //CHROME   // System.setProperty("webdriver.chrome.driver", "webdrivers\\chromedriver.exe");
+        System.setProperty("webdriver.gecko.driver", "webdrivers\\geckodriver.exe");
         DesiredCapabilities capabilities = null;
-        capabilities = DesiredCapabilities.chrome();
+        //CHROME   //  capabilities = DesiredCapabilities.chrome();
+        capabilities = DesiredCapabilities.firefox();
         capabilities.setJavascriptEnabled(true);
-        //  capabilities.setCapability("takesScreenshot", true);
-        driver = new ChromeDriver();
-        //driver = new FirefoxDriver();
+        capabilities.setCapability("takesScreenshot", true);
+        driver = new FirefoxDriver();
+        //CHROME  //driver = new ChromeDriver();
         driver.manage().deleteAllCookies();
         driver.manage().timeouts().setScriptTimeout(DEFAULT_WAIT,
                 TimeUnit.SECONDS);

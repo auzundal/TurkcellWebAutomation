@@ -12,12 +12,10 @@ import org.junit.runner.RunWith;
         //You can select features;
         // 1) ayhan1
         // 2) ayhan2
-        // 3) ayhan3
-        tags = "@ayhan1",
+        tags = "@ayhan2",
         strict = true,
         monochrome = true,
         snippets = CucumberOptions.SnippetType.CAMELCASE
 )
-
-public class TestRunner {
+class TestRunner {
 }

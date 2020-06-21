@@ -35,7 +35,7 @@ public class AssertionMethods extends SelectElementByType implements BaseTest {
      * @param title    : String : expected title
      * @param testCase : Boolean : test case [true or false]
      */
-    public void checkTitle(String title, boolean testCase) throws TestCaseFailed {
+    public void checkTitle(String title, boolean testCase) throws TestCaseFailed, IOException {
         String pageTitle = getPageTitle();
 
         if (testCase) {
@@ -67,7 +67,7 @@ public class AssertionMethods extends SelectElementByType implements BaseTest {
      * @param accessName  : String : Locator value
      * @param testCase    : Boolean : test case [true or false]
      */
-    public void checkElementText(String accessType, String actualValue, String accessName, boolean testCase) throws TestCaseFailed {
+    public void checkElementText(String accessType, String actualValue, String accessName, boolean testCase) throws TestCaseFailed, IOException {
         String elementText = getElementText(accessType, accessName);
 
         if (testCase) {
@@ -145,23 +145,20 @@ public class AssertionMethods extends SelectElementByType implements BaseTest {
         //   writeTxtFile(file, newStatusCode);
     }
 
-    public void restAPITest() {
+    public void restAPITest(int statusCode, String url) {
 
-        // String baseURL = "https://www.amazon.com/s?k=apple&i=" + departmentLine + "&ref=nb_sb_noss";
-        String baseURL = "https://jsonplaceholder.typicode.com/posts";
+        RestAssured.baseURI = url;
 
-        RestAssured.baseURI = baseURL;
-
-        // https://www.amazon.com/s?k=apple&i=arts-crafts-intl-ship&ref=nb_sb_noss
         RequestSpecification httpRequest = RestAssured.given();
         Response response = httpRequest.get();
 
-        int statusCode = response.getStatusCode();
-        String responseBody = response.asString();
+        int urlStatusCode = response.getStatusCode();
+        System.out.println(urlStatusCode);
 
-        System.out.println(statusCode);
-        System.out.println(responseBody);
+        Assert.assertEquals(statusCode, urlStatusCode);
+
     }
+
 
     public int restAPITestUser(int userId, int numposts) {
 
@@ -242,6 +239,44 @@ public class AssertionMethods extends SelectElementByType implements BaseTest {
     public boolean isElementDisplayed(String accessType, String accessName) {
         element = wait.until(ExpectedConditions.presenceOfElementLocated(getElementByType(accessType, accessName)));
         return element.isDisplayed();
+    }
+
+    /**
+     * method to get attribute value
+     *
+     * @param accessType    : String : Locator type (id, name, class, xpath, css)
+     * @param accessName    : String : Locator value
+     * @param attributeName : String : attribute name
+     * @return String
+     */
+    public String getElementAttribute(String accessType, String accessName, String attributeName) {
+        element = wait.until(ExpectedConditions.presenceOfElementLocated(getElementByType(accessType, accessName)));
+        return element.getAttribute(attributeName);
+    }
+
+    /**
+     * method to check attribute value
+     *
+     * @param accessType     : String : Locator type (id, name, class, xpath, css)
+     * @param attributeName  : String : attribute name
+     * @param attributeValue : String : attribute value
+     * @param accessName     : String : Locator value
+     * @param testCase       : Boolean : test case [true or false]
+     */
+    public void checkElementAttribute(String accessType, String attributeName, String attributeValue, String accessName, boolean testCase) throws TestCaseFailed, IOException {
+        String attrVal = getElementAttribute(accessType, accessName, attributeName);
+        boolean ss = accessName.contains(attributeValue);
+        System.out.println(ss);
+        int aa = accessName.length();
+        System.out.println(aa);
+
+        if (testCase) {
+            if (!attrVal.equals(attributeValue))
+                throw new TestCaseFailed("Attribute Value Not Matched");
+        } else {
+            if (attrVal.equals(attributeValue))
+                throw new TestCaseFailed("Attribute Value Matched");
+        }
     }
 
 }
