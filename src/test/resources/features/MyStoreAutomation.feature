@@ -11,7 +11,7 @@ Feature: My Store Test Automation
 
     When I scroll to element having id "SubmitCreate"
     And I click on element having id "email_create"
-    And I enter "hepsibuwrcada@gmail.com" into input field having id "email_create"
+    And I enter "hepsiburada2@gmail.com" into input field having id "email_create"
     And I click on element having id "SubmitCreate"
     And I scroll to element having id "customer_firstname"
     Then I see id "customer_firstname" element
