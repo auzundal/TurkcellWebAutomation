@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.testng.Assert;
@@ -229,6 +230,19 @@ public class AssertionMethods extends SelectElementByType implements BaseTest {
         }
     }
 
+    /** method to assert radio button selected/unselected
+     @param accessType : String : Locator type (id, name, class, xpath, css)
+     @param accessName : String : Locator value
+     @param shouldBeSelected : Boolean : test case [true or false]
+     */
+    public void isRadioButtonSelected(String accessType,String accessName,boolean shouldBeSelected) throws TestCaseFailed, IOException {
+        WebElement radioButton = wait.until(ExpectedConditions.presenceOfElementLocated(getElementByType(accessType, accessName)));
+        if((!radioButton.isSelected()) && shouldBeSelected)
+            throw new TestCaseFailed("Radio Button not selected");
+        else if(radioButton.isSelected() && !shouldBeSelected)
+            throw new TestCaseFailed("Radio Button is selected");
+    }
+
     /**
      * method to get element status - displayed?
      *
@@ -277,6 +291,11 @@ public class AssertionMethods extends SelectElementByType implements BaseTest {
             if (attrVal.equals(attributeValue))
                 throw new TestCaseFailed("Attribute Value Matched");
         }
+    }
+
+    public void pressEnter(String accessType, String accessName){
+        element = wait.until(ExpectedConditions.presenceOfElementLocated(getElementByType(accessType, accessName)));
+        element.sendKeys(Keys.ENTER);
     }
 
 }

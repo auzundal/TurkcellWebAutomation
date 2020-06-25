@@ -21,7 +21,7 @@ public class PredefinedStepDefinitions extends AssertionMethods implements BaseT
 
     public static long DEFAULT_WAIT = 20;
     protected WebDriver driver = DriverUtil.getDefaultDriver();
-    protected static String baseUrl = "http://automationpractice.com/";
+    protected static String baseUrl = "https://www.turkcell.com.tr";
     protected static WebElement element;
     protected static WebDriverWait wait;
 
@@ -173,37 +173,37 @@ public class PredefinedStepDefinitions extends AssertionMethods implements BaseT
 
     // select option by text/value from dropdown
     @Then("^I select \"(.*?)\" option by (.+) from dropdown having (.+) \"(.*?)\"$")
-    public void select_option_from_dropdown(String option,String optionBy,String type,String accessName) throws TestCaseFailed, IOException {
+    public void select_option_from_dropdown(String option, String optionBy, String type, String accessName) throws TestCaseFailed, IOException {
         miscmethodObj.validateLocator(type);
         miscmethodObj.validateOptionBy(optionBy);
-        inputObj.selectOptionFromDropdown(type,optionBy, option, accessName);
+        inputObj.selectOptionFromDropdown(type, optionBy, option, accessName);
     }
 
     // select option by index from dropdown
     @Then("^I select (\\d+) option by index from dropdown having (.+) \"(.*?)\"$")
     public void select_option_from_dropdown_by_index(String option, String type, String accessName) throws TestCaseFailed, IOException {
         miscmethodObj.validateLocator(type);
-        inputObj.selectOptionFromDropdown(type,"selectByIndex", option, accessName);
+        inputObj.selectOptionFromDropdown(type, "selectByIndex", option, accessName);
     }
 
     // select option by text/value from multiselect
     @Then("^I select \"(.*?)\" option by (.+) from multiselect dropdown having (.+) \"(.*?)\"$")
-    public void select_option_from_multiselect_dropdown(String option,String optionBy, String type,String accessName) throws TestCaseFailed, IOException {
+    public void select_option_from_multiselect_dropdown(String option, String optionBy, String type, String accessName) throws TestCaseFailed, IOException {
         miscmethodObj.validateLocator(type);
         miscmethodObj.validateOptionBy(optionBy);
-        inputObj.selectOptionFromDropdown(type,optionBy, option, accessName);
+        inputObj.selectOptionFromDropdown(type, optionBy, option, accessName);
     }
 
     // select option by index from multiselect
     @Then("^I select (\\d+) option by index from multiselect dropdown having (.+) \"(.*?)\"$")
     public void select_option_from_multiselect_dropdown_by_index(String option, String type, String accessName) throws TestCaseFailed, IOException {
         miscmethodObj.validateLocator(type);
-        inputObj.selectOptionFromDropdown(type,"selectByIndex", option, accessName);
+        inputObj.selectOptionFromDropdown(type, "selectByIndex", option, accessName);
     }
 
     // deselect option by text/value from multiselect
     @Then("^I deselect \"(.*?)\" option by (.+) from multiselect dropdown having (.+) \"(.*?)\"$")
-    public void deselect_option_from_multiselect_dropdown(String option,String optionBy, String type,String accessName) throws TestCaseFailed, IOException {
+    public void deselect_option_from_multiselect_dropdown(String option, String optionBy, String type, String accessName) throws TestCaseFailed, IOException {
         miscmethodObj.validateLocator(type);
         miscmethodObj.validateOptionBy(optionBy);
         inputObj.deselectOptionFromDropdown(type, optionBy, option, accessName);
@@ -234,9 +234,31 @@ public class PredefinedStepDefinitions extends AssertionMethods implements BaseT
 
     // step to check attribute value
     @Then("^element having (.+) \"([^\"]*)\" should\\s*((?:not)?)\\s+have attribute \"(.*?)\" with value \"(.*?)\"$")
-    public void check_element_attribute(String type,String accessName,String present,String attrb,String value) throws TestCaseFailed, IOException {
+    public void check_element_attribute(String type, String accessName, String present, String attrb, String value) throws TestCaseFailed, IOException {
         miscmethodObj.validateLocator(type);
         assertionObj.checkElementAttribute(type, attrb, value, accessName, present.isEmpty());
+    }
+
+    //steps to assert radio button checked or unchecked
+    @Then("^radio button having (.+) \"(.*?)\" should be (selected|unselected)$")
+    public void is_radio_button_selected(String type, String accessName, String state) throws Exception {
+        miscmethodObj.validateLocator(type);
+        boolean flag = state.equals("selected");
+        assertionObj.isRadioButtonSelected(type, accessName, flag);
+    }
+
+    @And("^I press enter button (.+) \"(.*?)\" element$")
+    public void clickEnter(String type, String accessName) throws IOException, TestCaseFailed {
+        miscmethodObj.validateLocator(type);
+        assertionObj.pressEnter(type, accessName);
+    }
+
+    // double click on web element
+    @Then("^I double click on element having (.+) \"(.*?)\"$")
+    public void double_click(String type, String accessValue) throws Exception
+    {
+        miscmethodObj.validateLocator(type);
+        clickObj.doubleClick(type, accessValue);
     }
 
 }
